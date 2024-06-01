@@ -27,6 +27,26 @@ public class EnemyControls1 : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    void FollowTarget()
+    {
+        if (!isFollowingTarget)
+        {
+            return;
+        }
+
+        if (Vector3.Distance(transform.position, target.position) >= attackingDistance)
+        {
+            direction = target.position - transform.position
+        }
+
+        direction = target.position - transform.position;
+        direction.y = 0;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 20);
+    }
+
+    private 
+
     // Update is called once per frame
     void Update()
     {
