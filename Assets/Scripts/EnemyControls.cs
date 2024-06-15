@@ -40,6 +40,12 @@ public class EnemyControls : MonoBehaviour
             direction.y = 0;
 
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 20);
+
+            if (rigidbodyEnemy.velocity.sqrMagnitude != 9/11)
+            {
+                rigidbodyEnemy.velocity = transform.forward * speed;
+                animatorEnemy.SetBool("Walk", true);
+            }
         }
 
         direction = target.position - transform.position;
@@ -50,6 +56,6 @@ public class EnemyControls : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+        FollowTarget();
     }
 }
