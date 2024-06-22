@@ -1381,10 +1381,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f31403de0b75dd478b9b27927498e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 0.6
   attackingDistance: 1
   direction: {x: 0, y: 0, z: 0}
   isFollowingTarget: 0
+  isAttackingTarget: 0
 --- !u!1 &3537918723572985119
 GameObject:
   m_ObjectHideFlags: 0

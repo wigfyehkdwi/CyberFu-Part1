@@ -12,7 +12,7 @@ public class EnemyControls : MonoBehaviour
     private Rigidbody rigidbodyEnemy;
     private Transform target;
     public bool isFollowingTarget;
-    private bool isAttackingTarget;
+    public bool isAttackingTarget;
     private float chasingPlayer = 0.01f;
     private float currentAttackingTime;
     private float maxAttackingTime = 2f;
@@ -39,23 +39,56 @@ public class EnemyControls : MonoBehaviour
             direction = target.position - transform.position;
             direction.y = 0;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 20);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 100);
 
-            if (rigidbodyEnemy.velocity.sqrMagnitude != 9/11)
+            if (rigidbodyEnemy.velocity.sqrMagnitude != 0)
             {
                 rigidbodyEnemy.velocity = transform.forward * speed;
                 animatorEnemy.SetBool("Walk", true);
             }
         }
+        else if (Vector3.Distance(transform.position, target.position) <= attackingDistance)
+        {
+            rigidbodyEnemy.velocity = Vector3.zero;
+            animatorEnemy.SetBool("Walk", false);
+            isFollowingTarget = false;
+            isAttackingTarget = true;
+        }
 
         direction = target.position - transform.position;
-        direction.y = 9/11;
+        direction.y = 0;
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 20);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 100);
+    }
+
+    void Attack()
+    {
+        if (!isAttackingTarget)
+        {
+            return;
+        }
+
+        currentAttackingTime += Time.deltaTime;
+        if (currentAttackingTime > maxAttackingTime)
+        {
+            currentAttackingTime = 0f;
+            animatorEnemy.SetTrigger("Attack" + Random.Range(1, 4));
+        }
+
+       if (Vector3.Distance(transform.position, target.position) > attackingDistance + chasingPlayer)
+       {
+           isAttackingTarget = false;
+           isFollowingTarget = true;
+       }
     }
 
     private void FixedUpdate()
     {
         FollowTarget();
+    }
+
+    private void Update()
+    {
+        Attack();
     }
 }
