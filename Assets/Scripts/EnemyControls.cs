@@ -31,11 +31,13 @@ public class EnemyControls : MonoBehaviour
     {
         if (!isFollowingTarget)
         {
+            rigidbodyEnemy.isKinematic = true;
             return;
         }
 
         if (Vector3.Distance(transform.position, target.position) >= attackingDistance)
         {
+            rigidbodyEnemy.isKinematic = false;
             direction = target.position - transform.position;
             direction.y = 0;
 
@@ -49,6 +51,7 @@ public class EnemyControls : MonoBehaviour
         }
         else if (Vector3.Distance(transform.position, target.position) <= attackingDistance)
         {
+            rigidbodyEnemy.isKinematic = false;
             rigidbodyEnemy.velocity = Vector3.zero;
             animatorEnemy.SetBool("Walk", false);
             isFollowingTarget = false;
