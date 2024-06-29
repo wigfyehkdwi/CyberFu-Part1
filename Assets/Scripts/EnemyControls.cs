@@ -75,7 +75,7 @@ public class EnemyControls : MonoBehaviour
         if (currentAttackingTime > maxAttackingTime)
         {
             currentAttackingTime = 0f;
-            animatorEnemy.SetTrigger("Attack" + Random.Range(1, 4));
+            animatorEnemy.SetTrigger("Attack" + Random.Range(1, 7));
         }
 
        if (Vector3.Distance(transform.position, target.position) > attackingDistance + chasingPlayer)
